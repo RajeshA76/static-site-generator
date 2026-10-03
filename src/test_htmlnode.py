@@ -1,5 +1,5 @@
 import unittest
-from htmlnode import HTMLNode
+from htmlnode import HTMLNode,LeafNode
 
 
 """
@@ -59,6 +59,21 @@ class TestHTMLNode(unittest.TestCase):
     def test_repr(self):
         node = HTMLNode("p","some text",None,{"class":"intro"})
         self.assertEqual(repr(node),"HTMLNode(p,some text,None,{'class': 'intro'})")
+
+class TestLeafNode(unittest.TestCase):
+    def test_empty_value(self):
+        node = LeafNode(tag="p",value=None)
+        self.assertIsNone(node.value)
+        with self.assertRaises(ValueError):
+            node.to_html()
+
+    def test_empty_tag(self):
+        node = LeafNode(tag=None,value="no tag in this text")
+        self.assertIsNone(node.tag)
+        self.assertEqual(node.to_html(),node.value)
+
+
+        
 
 
 
